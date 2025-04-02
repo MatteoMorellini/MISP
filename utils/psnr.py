@@ -25,5 +25,5 @@ def psnr(target: np.ndarray, ref: np.ndarray) -> float:
     mse = np.mean((target - ref) ** 2)  # Calculate Mean Squared Error (MSE)
     if mse == 0:
         return float('inf')  # If MSE is zero, images are identical, so PSNR is infinite
-    max_pixel = 1.0  # Assuming the pixel values are in the range [0, 1]
+    max_pixel = 1.0 # Since the image is normalized
     return 20 * np.log10(max_pixel / np.sqrt(mse))  # Calculate and return PSNR
