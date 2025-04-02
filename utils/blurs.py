@@ -25,7 +25,7 @@ def gaussian_kernel(size: int, sigma: float) -> np.ndarray:
     ax = np.linspace(-(size // 2), size // 2, size)  # Create a 1D axis for the kernel
     xx, yy = np.meshgrid(ax, ax)  # Create 2D meshgrid
     kernel = np.exp(-0.5 * (np.square(xx) + np.square(yy)) / np.square(sigma))  # Apply Gaussian function
-    return kernel / np.sum(kernel)  # Normalize the kernel
+    return kernel / np.sum(kernel)  
 
 def linear_motion_blur_kernel(kernel_size: int, angle: float) -> np.ndarray:
     """
@@ -46,10 +46,10 @@ def linear_motion_blur_kernel(kernel_size: int, angle: float) -> np.ndarray:
     >>> kernel = linear_motion_blur_kernel(5, 45)
     >>> print(kernel)
     """
-    kernel = np.zeros((kernel_size, kernel_size))  # Initialize kernel with zeros
-    center = kernel_size // 2  # Find the center of the kernel
+    kernel = np.zeros((kernel_size, kernel_size)) 
+    center = kernel_size // 2  
     kernel[center, :] = np.ones(kernel_size)  # Create a horizontal line in the center
-    kernel /= kernel_size  # Normalize the kernel so that the sum of elements equals 1
+    kernel /= kernel_size  
     
     # Create the rotation matrix to rotate the kernel by the given angle
     rotation_matrix = cv2.getRotationMatrix2D((center, center), angle, 1) 
@@ -84,7 +84,7 @@ def out_of_focus_blur_kernel(radius: int) -> np.ndarray:
     kernel /= np.sum(kernel)  # Normalize the kernel so that the sum of its elements equals 1
     return kernel
 
-def airy_disk_kernel(radius: float, kernel_size: int) -> np.ndarray:
+def diffraction_limited_imaging(radius: float, kernel_size: int) -> np.ndarray:
     """
     Generates an Airy disk kernel, simulating diffraction-limited blur.
 
@@ -103,7 +103,7 @@ def airy_disk_kernel(radius: float, kernel_size: int) -> np.ndarray:
     np.ndarray: A 2D NumPy array representing the Airy disk kernel, normalized to sum to 1.
 
     Example:
-    >>> kernel = airy_disk_kernel(5.0, 21)
+    >>> kernel = diffraction_limited_imaging(5.0, 21)
     >>> print(kernel)
     """
     # Create a grid of (x, y) coordinates

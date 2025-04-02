@@ -1,5 +1,5 @@
 import numpy as np
-from numpy.fft import fft2, ifft2
+from numpy.fft import fft2, ifft2, fftfreq
 
 def l2_deconvolution(noisy_blurred: np.ndarray, blur_kernel: np.ndarray, mu: float) -> np.ndarray:
     """
@@ -24,7 +24,7 @@ def l2_deconvolution(noisy_blurred: np.ndarray, blur_kernel: np.ndarray, mu: flo
     Example:
     >>> deblurred_image = l2_deconvolution(noisy_image, kernel, mu=1e-3)
     """
-    G = fft2(noisy_blurred)
+    G = fft2(noisy_blurred) 
     H = fft2(blur_kernel, s=noisy_blurred.shape)
 
     denom = np.abs(H)**2 + mu
@@ -36,8 +36,6 @@ def l2_deconvolution(noisy_blurred: np.ndarray, blur_kernel: np.ndarray, mu: flo
     
     return f_deconvolved
 
-import numpy as np
-from numpy.fft import fft2, ifft2, fftfreq
 
 def h1_deconvolution(noisy_blurred: np.ndarray, blur_kernel: np.ndarray, mu: float) -> np.ndarray:
     """
